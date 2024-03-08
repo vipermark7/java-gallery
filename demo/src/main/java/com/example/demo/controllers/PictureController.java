@@ -5,19 +5,18 @@ import com.example.demo.services.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/pictures")
 public class PictureController {
-    @Autowired
-    private PictureService pictureService;
-
-    @GetMapping("/")
-    public String home() {
-        return "home";
+    public PictureController(PictureService pictureService) {
+        this.pictureService = pictureService;
     }
+    @Autowired
+    private final PictureService pictureService;
 
     @GetMapping
     public List<Picture> getAllPictures() {
@@ -42,14 +41,14 @@ public class PictureController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Picture> updatePicture(@PathVariable Long id, @RequestBody Picture updatedPicture) {
+    public ResponseEntity<Picture> updatePicture(@PathVariable Long id,
+                                                 @RequestBody Picture updatedPicture) {
         Picture updated = pictureService.updatePicture(id, updatedPicture);
 
         if (updated != null) {
             return new ResponseEntity<>(updated, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/{id}")
