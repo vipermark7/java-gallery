@@ -18,6 +18,9 @@ public class Picture {
         this.blob = blob;
     }
 
+    public Picture() {
+    }
+
     public String getCategory() {
         return category;
     }

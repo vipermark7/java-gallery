@@ -18,7 +18,7 @@ public class PictureController {
     @Autowired
     private final PictureService pictureService;
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Picture> getAllPictures() {
         return pictureService.getAllPictures();
     }
