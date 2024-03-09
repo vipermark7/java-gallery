@@ -9,3 +9,5 @@ Gallery app written in Sping Boot
 
 - Optional
 * Tag users by faces? (using OpenCV or soemthing)
+
+/home/spacey/Pictures/Screenshots/Screenshot from 2024-03-09 04-38-00.png
