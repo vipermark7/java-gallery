@@ -5,8 +5,8 @@ import com.example.demo.services.PictureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -20,6 +20,8 @@ public class PictureController {
 
     @GetMapping("/all")
     public List<Picture> getAllPictures() {
+        // using a separate variable here so that our Thymeleaf page for showing all pictures
+        // can render the pictures, without directly calling getAllPictures()
         return pictureService.getAllPictures();
     }
 

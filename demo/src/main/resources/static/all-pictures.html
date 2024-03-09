@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>List of Pictures</title>
+    <!-- Add your CSS and other head elements here -->
+</head>
+<body>
+
+<h2>List of Pictures</h2>
+
+<div th:if="${#lists.isNotEmpty(pictures)}">
+    <ul>
+        <li th:each="picture : ${pictures}">
+            <p>ID: <span th:text="${picture.id}"></span></p>
+            <p>Description: <span th:text="${picture.description}"></span></p>
+            <p>Blob: <span th:text="${picture.blob}"></span></p>
+            <p>Categories:
+                <span th:if="${#lists.isNotEmpty(picture.categories)}">
+                    <ul>
+                        <li th:each="category : ${picture.categories}" th:text="${category.categoryName}"></li>
+                    </ul>
+                </span>
+                <span th:unless="${#lists.isNotEmpty(picture.categories)}">No categories</span>
+            </p>
+        </li>
+    </ul>
+</div>
+
+<!-- Add your JavaScript and other body elements here -->
+
+</body>
+</html>

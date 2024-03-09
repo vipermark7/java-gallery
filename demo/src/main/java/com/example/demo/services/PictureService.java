@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -40,14 +41,15 @@ public class PictureService {
         if (existingPicture != null) {
             existingPicture.setDescription(updatedPicture.getDescription());
             existingPicture.setBlob(updatedPicture.getBlob());
-
             return pictureRepository.save(existingPicture);
         } else {
             return null;
         }
     }
-
     public void deletePicture(Long id) {
         pictureRepository.deleteById(id);
+    }
+    public static byte[] convertBase64ToBytes(String base64String) {
+        return Base64.getDecoder().decode(base64String);
     }
 }
