@@ -10,4 +10,4 @@ Gallery app written in Sping Boot
 - Optional
 * Tag users by faces? (using OpenCV or soemthing)
 
-/home/spacey/Pictures/Screenshots/Screenshot from 2024-03-09 04-38-00.png
+![Screenshot from 2024-03-09 04-38-00](https://github.com/vipermark7/java-gallery/assets/9751748/f79d1661-4365-4837-bad1-7a995a36fc18)
