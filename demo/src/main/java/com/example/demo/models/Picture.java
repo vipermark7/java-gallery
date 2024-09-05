@@ -1,47 +1,34 @@
 package com.example.demo.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "pictures")
+@Setter
+@Getter
+@Builder
 public class Picture {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String description;
-    String blob;
-    String category;
+    byte[] blob;
+    //TODO: implement categories
+    //List<String> categories  = new ArrayList<>();
 
-    public Picture(String description, String category, String blob) {
+    public Picture(String description, byte[] blob) {
         this.description = description;
-        this.category = category;
+        //this.categories = categories;
         this.blob = blob;
     }
 
     public Picture() {
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-    public String getDescription() {
-        return description;
-    }
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    public String getBlob() {
-        return blob;
-    }
-    public void setBlob(String blob) {
-        this.blob = blob;
-    }
-
-    public Long getId() {
-        return id;
     }
 }
