@@ -28,8 +28,8 @@ public class PictureController {
     @GetMapping("/{id}")
     public ResponseEntity<Picture> getPictureById(@PathVariable Long id) {
         var picture = pictureService.getPictureById(id);
-        if (picture != null) {
-            return new ResponseEntity<>(picture, HttpStatus.OK);
+        if (picture != null && picture.isPresent()) {
+            return new ResponseEntity<>(picture.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -47,8 +47,8 @@ public class PictureController {
             @RequestBody Picture updatedPicture) {
         var updated = pictureService.updatePicture(id, updatedPicture);
 
-        if (updated != null) {
-            return new ResponseEntity<>(updated, HttpStatus.OK);
+        if (updated != null && updated.isPresent()) {
+            return new ResponseEntity<>(updated.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

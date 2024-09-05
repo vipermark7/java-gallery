@@ -8,7 +8,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,10 +67,10 @@ public class PictureServiceTest {
         when(pictureRepository.findById(1L))
                 .thenReturn(Optional.of(picture));
 
-        Picture result = pictureService.getPictureById(1L);
+        Optional<Picture> result = pictureService.getPictureById(1L);
 
         assertNotNull(result);
-        assertEquals(picture, result);
+        result.ifPresent(value -> assertEquals(picture, result.get()));
     }
 
     @Test
@@ -79,9 +78,9 @@ public class PictureServiceTest {
         when(pictureRepository.findById(1L))
                 .thenReturn(Optional.empty());
 
-        Picture result = pictureService.getPictureById(1L);
+        Optional<Picture> result = pictureService.getPictureById(1L);
 
-        assertNull(result);
+        assertEquals(result, Optional.empty());
     }
 
     @Test
@@ -114,11 +113,14 @@ public class PictureServiceTest {
         when(pictureRepository.save(any(Picture.class)))
                 .thenReturn(updatedPicture);
 
-        Picture result = pictureService.updatePicture(1L, updatedPicture);
+        Optional<Picture> result = pictureService.updatePicture(1L, updatedPicture);
+        if (result.isPresent()) {
+            var r = result.get();
+            assertNotNull(result);
+            assertEquals("New Description", r.getDescription());
+            assertArrayEquals(new byte[]{1, 2, 3}, r.getBlob());
+        }
 
-        assertNotNull(result);
-        assertEquals("New Description", result.getDescription());
-        assertArrayEquals(new byte[]{1, 2, 3}, result.getBlob());
     }
 
     @Test
@@ -129,9 +131,9 @@ public class PictureServiceTest {
         when(pictureRepository.findById(1L))
                 .thenReturn(Optional.empty());
 
-        Picture result = pictureService.updatePicture(1L, updatedPicture);
+        Optional<Picture> result = pictureService.updatePicture(1L, updatedPicture);
 
-        assertNull(result);
+        assertEquals(result.get(), Optional.empty());
         verify(logger).error("Couldn't find/update picture with ID: {}", 1L);
     }
 
@@ -151,6 +153,6 @@ public class PictureServiceTest {
         pictureService.deletePicture(1L);
 
         verify(pictureRepository).deleteById(1L);
-        verify(logger).error("Invalid ID");
+        verify(logger).error(any(), Optional.ofNullable(any()));
     }
 }

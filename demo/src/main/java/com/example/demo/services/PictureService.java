@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequestMapping("/api/pictures")
@@ -34,10 +35,9 @@ public class PictureService {
     }
 
     @GetMapping
-    public Picture getPictureById(Long id) {
+    public Optional<Picture> getPictureById(Long id) {
         return pictureRepository
-                .findById(id)
-                .orElse(null);
+                .findById(id);
     }
 
     @PostMapping
@@ -45,7 +45,7 @@ public class PictureService {
         return pictureRepository.save(picture);
     }
 
-    public Picture updatePicture(Long id, Picture picture) {
+    public Optional<Picture> updatePicture(Long id, Picture picture) {
         Picture existing = pictureRepository
                 .findById(id)
                 .orElse(null);
@@ -57,10 +57,10 @@ public class PictureService {
                     .blob(picture.getBlob())
                     .build();
 
-            return pictureRepository.save(updated);
+            return Optional.of(pictureRepository.save(updated));
         } else {
             logger.error("Couldn't find/update picture with ID: {}", id);
-            return null;
+            return Optional.empty();
         }
     }
 

@@ -23,7 +23,8 @@ public class Picture {
     //TODO: implement categories
     //List<String> categories  = new ArrayList<>();
 
-    public Picture(String description, byte[] blob) {
+    public Picture(Long id, String description, byte[] blob) {
+        this.id = id;
         this.description = description;
         //this.categories = categories;
         this.blob = blob;
